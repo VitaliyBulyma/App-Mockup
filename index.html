@@ -59,7 +59,38 @@
       <div class="container-fluid">
         <h1 class="mt-4">Main Dashboard</h1>
         <p>This page is designated to show overview of the account</p>
-        
+                <div class="container">
+          <div class="row my-3">
+              <div class="col">
+                  <h4>Statistic</h4>
+              </div>
+          </div>
+          <div class="row py-2">
+              <div class="col-md-4 py-1">
+                  <div class="card">
+                      <div class="card-body">
+                          <canvas id="chDonut1"></canvas>
+                      </div>
+                  </div>
+              </div>
+              <div class="col-md-4 py-1">
+                  <div class="card">
+                      <div class="card-body">
+                          <canvas id="chDonut2"></canvas>
+                      </div>
+                  </div>
+              </div>
+              <div class="col-md-4 py-1">
+                  <div class="card">
+                      <div class="card-body">
+                          <canvas id="chDonut3"></canvas>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+        <canvas class="my-4 w-100 chartjs-render-monitor" id="myChart" width="800" height="300" style="display: block; height: 100px; width: 400px;"></canvas>
+
       </div>
     </div>
     <!-- /#page-content-wrapper -->
@@ -70,6 +101,9 @@
   <!-- Bootstrap core JavaScript -->
   <script src="vendor/jquery/jquery.min.js"></script>
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>
+  <script src="js/charts.js"></script>
 
   <!-- Menu Toggle Script -->
   <script>
@@ -77,6 +111,81 @@
       e.preventDefault();
       $("#wrapper").toggleClass("toggled");
     });
+    // pie chart
+    /* chart.js chart examples */
+
+// chart colors
+var colors = ['#007bff','#28a745','#333333','#c3e6cb','#dc3545','#6c757d'];
+
+/* 3 donut charts */
+var donutOptions = {
+  cutoutPercentage: 85, 
+  legend: {position:'bottom', padding:5, labels: {pointStyle:'circle', usePointStyle:true}}
+};
+
+// donut 1
+var chDonutData1 = {
+    labels: ['Google', 'Yelp', 'Other'],
+    datasets: [
+      {
+        backgroundColor: colors.slice(0,3),
+        borderWidth: 0,
+        data: [74, 11, 40]
+      }
+    ]
+};
+
+var chDonut1 = document.getElementById("chDonut1");
+if (chDonut1) {
+  new Chart(chDonut1, {
+      type: 'pie',
+      data: chDonutData1,
+      options: donutOptions
+  });
+}
+
+// donut 2
+var chDonutData2 = {
+    labels: ['New Customers', 'Returning', 'Existing'],
+    datasets: [
+      {
+        backgroundColor: colors.slice(0,3),
+        borderWidth: 0,
+        data: [40, 45, 30]
+      }
+    ]
+};
+var chDonut2 = document.getElementById("chDonut2");
+if (chDonut2) {
+  new Chart(chDonut2, {
+      type: 'pie',
+      data: chDonutData2,
+      options: donutOptions
+  });
+}
+
+// donut 3
+var chDonutData3 = {
+    labels: ['Completed', 'Abandoned', 'Other'],
+    datasets: [
+      {
+        backgroundColor: colors.slice(0,3),
+        borderWidth: 0,
+        data: [21, 45, 55, 33]
+      }
+    ]
+};
+var chDonut3 = document.getElementById("chDonut3");
+if (chDonut3) {
+  new Chart(chDonut3, {
+      type: 'pie',
+      data: chDonutData3,
+      options: donutOptions
+  });
+}
+
+
+    // end pie chart
   </script>
 
 </body>

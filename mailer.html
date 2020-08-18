@@ -57,23 +57,53 @@
       </nav>
 
       <div class="container-fluid">
-        <h1 class="mt-4">Mailer page</h1>
+                <h1 class="mt-4">Mailer page</h1>
         <p>This page is dedicated to display emailing functionality</p>
+<!-- upload -->
+<form >
+  <div class='custom-file mb-4'>
+    <input
+      type='file'
+      class='custom-file-input'
+      id='customFile'
+      
+      
+    />
+    <label class='custom-file-label' for='customFile'>
+      
+    </label>
+
+  </div> 
+
+
+</form>
+<!-- end upload -->
+<div>
+  
+  <button id="sendemails" style="display: none;" type="button" class="btn btn-primary" onclick="sent()">Send promotional Emails</button>
+<button id="retrieve" type="button" class="btn btn-primary" onclick="loadDoc()">Retrieve Emails</button>
+</div>
+        
+
       </div>
       <!-- data  -->
-      <p id="data">Data goes here</p>
+
+      
+        <ol id="dataset"></ol>
+      
       <p id="csv-display"></p>
       <!-- end data -->
     </div>
     <!-- /#page-content-wrapper -->
-
+    
   </div>
   <!-- /#wrapper -->
 
   <!-- Bootstrap core JavaScript -->
   <script src="vendor/jquery/jquery.min.js"></script>
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="https://code.jscharting.com/latest/jscharting.js"></script>
+  <!-- <script src="https://code.jscharting.com/latest/jscharting.js"></script> -->
+
 
 
   <!-- Menu Toggle Script -->
@@ -84,13 +114,36 @@
     }); 
     
     // link http://vitaliybulyma.com/documents/data.csv
-    JSC.fetch("http://vitaliybulyma.com/documents/data.csv")
-  .then(response => response.text())
-  .then(text => {
-    //Use CSV text
-    console.log(text);
-  });
-	
+  var count;
+  function loadDoc() {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      // console.log(this.response.data);
+      const data = JSON.parse(this.responseText);
+      var arrayofdata = data.data;
+      // console.log(data.data[0].email);
+      // console.log(arrayofdata.length);
+      document.getElementById("dataset").innerHTML="";
+      for (i=0; i<arrayofdata.length;i++){
+        document.getElementById("dataset").innerHTML += "<li>"+ arrayofdata[i].email+"</li>" + "</br>";
+      }
+      }
+    document.getElementById("sendemails").style.display="block";
+    document.getElementById("retrieve").style.display="none";
+    count = arrayofdata.length;
+    
+  };
+  xhttp.open("GET", "https://reqres.in/api/users");
+  xhttp.send();
+  
+}
+
+function sent(){
+ 
+  document.getElementById("dataset").innerHTML="Promotional Emails are sent to " + count + " customers";
+  
+}
   </script>
 
 </body>
